@@ -21,8 +21,8 @@ const FileUpload = () => {
 
     try {
       const response = await axios.post(
-        // 'https://dahuli-tool.vercel.app/api/calculate/sku',
-        'http://localhost:3000/api/calculate/sku',
+        'https://dahuli-tool.vercel.app/api/calculate/sku',
+        // 'http://localhost:3000/api/calculate/sku',
         formData,
         {
           headers: {
