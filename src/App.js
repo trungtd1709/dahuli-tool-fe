@@ -7,7 +7,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         {/* <img src={logo} className="App-logo" alt="logo" /> */}
-        <p>Xin chào sếp Lĩnh</p>
+        <p style={{ margin: "0 0 20px 0" }}>Xin chào sếp Lĩnh</p>
         <FileUpload />
       </header>
     </div>
