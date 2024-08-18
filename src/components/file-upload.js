@@ -3,6 +3,7 @@ import axios from 'axios';
 
 const FileUpload = () => {
   const [selectedFiles, setSelectedFiles] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const handleFileChange = (event) => {
     setSelectedFiles(Array.from(event.target.files));
@@ -18,6 +19,8 @@ const FileUpload = () => {
     selectedFiles.forEach((file) => {
       formData.append('files', file);
     });
+
+    setLoading(true); // Set loading to true when starting the request
 
     try {
       const response = await axios.post(
@@ -45,6 +48,8 @@ const FileUpload = () => {
     } catch (error) {
       console.error('Error uploading files:', error);
       alert('Failed to upload files and download the result');
+    } finally {
+      setLoading(false); // Set loading to false after the request completes
     }
   };
 
@@ -55,10 +60,15 @@ const FileUpload = () => {
         type="file"
         multiple
         onChange={handleFileChange}
+        disabled={loading} // Disable input while loading
       />
-      <button onClick={handleUpload}>Upload</button>
+      <button onClick={handleUpload} disabled={loading}>
+        {loading ? 'Uploading...' : 'Upload'}
+      </button>
 
-      {selectedFiles.length > 0 && (
+      {loading && <p>Loading, please wait...</p>} {/* Loading message */}
+
+      {selectedFiles.length > 0 && !loading && (
         <div>
           <h3>Selected Files:</h3>
           <ul>
