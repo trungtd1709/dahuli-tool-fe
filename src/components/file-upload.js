@@ -35,11 +35,21 @@ const FileUpload = () => {
         }
       );
 
+      const contentDisposition = response.headers['content-disposition'];
+      let fileName = 'download.zip'; // Default file name
+
+      if (contentDisposition) {
+        const matches = contentDisposition.match(/filename="(.+)"/);
+        if (matches && matches.length === 2) {
+          fileName = matches[1];
+        }
+      }
+
       // Create a URL for the file and trigger a download
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', 'cogs.xlsx'); // File name based on your backend
+      link.setAttribute('download', fileName); // File name based on your backend
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
