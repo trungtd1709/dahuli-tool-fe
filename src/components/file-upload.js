@@ -97,7 +97,7 @@ const FileUpload = () => {
 
   return (
     <div>
-      <h2>Upload Multiple Files</h2>
+      <h3>Tool COGS of DAHULI</h3>
       <input
         type="file"
         multiple
