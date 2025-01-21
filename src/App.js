@@ -1,17 +1,21 @@
-import logo from "./logo.svg";
+import React from "react";
 import "./App.css";
-import FileUpload from "./components/file-upload";
+import { Route, Routes } from "react-router-dom";
+import { UploadPage } from "./pages/UpLoadPage";
+import { TablePage } from "./pages/TablePage";
+import { AppLayout } from "./components/AppLayout";
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        {/* <img src={logo} className="App-logo" alt="logo" /> */}
-        <p style={{ margin: "0 0 20px 0" }}>Xin chào sếp Lĩnh</p>
-        <FileUpload />
-      </header>
-    </div>
+    <AppLayout>
+      <Routes>
+        <Route path="/" element={<UploadPage />} />
+        <Route path="/table" element={<TablePage />} />
+        {/* <Route path="/about" element={<AboutPage />} /> */}
+        {/* <Route path="*" element={<NotFoundPage />} /> For 404 */}
+      </Routes>
+    </AppLayout>
   );
-}
+};
 
 export default App;
