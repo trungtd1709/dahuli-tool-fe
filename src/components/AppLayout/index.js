@@ -1,136 +1,72 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   AppstoreOutlined,
   MailOutlined,
   SettingOutlined,
+  CloseOutlined,
+  MenuFoldOutlined,
 } from "@ant-design/icons";
-import { Menu } from "antd";
-const items = [
-  {
-    key: "sub1",
-    label: "Navigation One",
-    icon: <MailOutlined />,
-    children: [
-      {
-        key: "g1",
-        label: "Item 1",
-        type: "group",
-        children: [
-          {
-            key: "1",
-            label: "Option 1",
-          },
-          {
-            key: "2",
-            label: "Option 2",
-          },
-        ],
-      },
-      {
-        key: "g2",
-        label: "Item 2",
-        type: "group",
-        children: [
-          {
-            key: "3",
-            label: "Option 3",
-          },
-          {
-            key: "4",
-            label: "Option 4",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    key: "sub2",
-    label: "Navigation Two",
-    icon: <AppstoreOutlined />,
-    children: [
-      {
-        key: "5",
-        label: "Option 5",
-      },
-      {
-        key: "6",
-        label: "Option 6",
-      },
-      {
-        key: "sub3",
-        label: "Submenu",
-        children: [
-          {
-            key: "7",
-            label: "Option 7",
-          },
-          {
-            key: "8",
-            label: "Option 8",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    type: "divider",
-  },
-  {
-    key: "sub4",
-    label: "Navigation Three",
-    icon: <SettingOutlined />,
-    children: [
-      {
-        key: "9",
-        label: "Option 9",
-      },
-      {
-        key: "10",
-        label: "Option 10",
-      },
-      {
-        key: "11",
-        label: "Option 11",
-      },
-      {
-        key: "12",
-        label: "Option 12",
-      },
-    ],
-  },
-  {
-    key: "grp",
-    label: "Group",
-    type: "group",
-    children: [
-      {
-        key: "13",
-        label: "Option 13",
-      },
-      {
-        key: "14",
-        label: "Option 14",
-      },
-    ],
-  },
-];
+import { Menu, Layout, Button } from "antd";
+import { useNavigate } from "react-router-dom";
+
+const { Sider, Content } = Layout;
+
 export const AppLayout = (props) => {
-  const onClick = (e) => {
-    console.log("click ", e);
+  const [collapsed, setCollapsed] = useState(false);
+  const navigate = useNavigate(); // React Router navigation hook
+
+  const toggleCollapse = () => {
+    setCollapsed(!collapsed);
   };
+
+  const onClick = (e) => {
+    console.log("Click: ", e);
+    if (e.key === "1") navigate("/"); // Redirect to "Trang Up File"
+    if (e.key === "2") navigate("/luu-y"); // Redirect to "Lưu Ý"
+  };
+
+  const items = [
+    {
+      key: "1",
+      label: "Trang up file", // Clicking this should navigate
+    },
+    {
+      key: "2",
+      label: "Lưu ý", // Clicking this should navigate
+    },
+  ];
+
   return (
-    <div style={{ display: "flex", flexDirection: "row" }}>
-      <Menu
-        onClick={onClick}
+    <Layout style={{ height: "100vh" }}>
+      <Sider
+        collapsible
+        collapsed={collapsed}
+        trigger={null}
         style={{
-          width: 256,
+          background: "#fff",
+          position: "relative",
         }}
-        defaultSelectedKeys={["1"]}
-        defaultOpenKeys={["sub1"]}
-        mode="inline"
-        items={items}
-      />
-      <div style={{ width: "100%" }}>{props.children}</div>
-    </div>
+      >
+        <div className="d-flex justify-content-center px-2 pt-2">
+          {collapsed ? null : <h4>DAHULI TOOL</h4>}
+          <Button
+            type="text"
+            icon={collapsed ? <MenuFoldOutlined /> : <CloseOutlined />}
+            onClick={toggleCollapse}
+            style={{ fontSize: "16px" }}
+          />
+        </div>
+        <Menu
+          onClick={onClick}
+          defaultSelectedKeys={["1"]}
+          defaultOpenKeys={["sub1"]}
+          mode="inline"
+          items={items}
+        />
+      </Sider>
+      <Layout>
+        <Content style={{padding: "30px 30px"}}>{props.children}</Content>
+      </Layout>
+    </Layout>
   );
 };
